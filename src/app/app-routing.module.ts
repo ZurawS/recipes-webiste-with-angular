@@ -1,46 +1,38 @@
-import { RecipeDetailsComponent } from './components/recipes/recipe-details/recipe-details.component';
-import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipeStartComponent } from './components/recipes/recipe-start/recipe-start.component';
-import { RecipeEditComponent } from './components/recipes/recipe-edit/recipe-edit.component';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/auth',
+  },
+  {
     path: 'recipes',
-    component: RecipesComponent,
-    children: [
-      {
-        path: '',
-        component: RecipeStartComponent,
-      },
-      {
-        path: 'new',
-        component: RecipeEditComponent,
-      },
-      {
-        path: ':id',
-        component: RecipeDetailsComponent,
-      },
-      {
-        path: ':id/edit',
-        component: RecipeEditComponent,
-      },
-    ],
+    loadChildren: () =>
+      import('./components/recipes/recipes.module').then(
+        (module) => module.RecipesModule
+      ),
   },
   {
     path: 'shopping-list',
-    component: ShoppingListComponent,
+    loadChildren: () =>
+      import('./components/shopping-list/shopping-list.module').then(
+        (module) => module.ShoppingListModule
+      ),
   },
   {
-    path: '**',
-    redirectTo: '/recipes',
+    path: 'auth',
+    loadChildren: () =>
+      import('./auth/auth.module').then((module) => module.AuthModule),
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PageTransitionEvent }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
