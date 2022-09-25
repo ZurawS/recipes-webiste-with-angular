@@ -1,5 +1,4 @@
 import { SharedModule } from './../../shared/shared.module';
-import { CoreModule } from './../../core.module';
 import { RouterModule } from '@angular/router';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';

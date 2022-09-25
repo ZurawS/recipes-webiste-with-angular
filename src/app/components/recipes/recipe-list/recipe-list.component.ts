@@ -7,7 +7,6 @@ import {
   Output,
   OnDestroy,
 } from '@angular/core';
-import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from '../recipe.model';
 
 @Component({
